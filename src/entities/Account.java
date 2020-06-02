@@ -1,5 +1,7 @@
 package entities;
 
+import org.w3c.dom.DOMException;
+
 public class Account {
 	private Integer number;
 	private String holder;
@@ -49,7 +51,17 @@ public class Account {
 			balance += amount;
 		}
 		
-		public void withdraw(Double amount) {
+		public void withdraw(Double amount) throws DomainException {
+			
+			if(balance <=0 || amount > balance) {
+				throw new DomainException("Withdraw error: not enough balance");
+			}
+		
+			
+			if(withDrawLimit < amount) {
+				throw new DomainException("Error the amount exceeds withdraw limit");
+			}
+			
 			balance -= amount;
 		}
 	

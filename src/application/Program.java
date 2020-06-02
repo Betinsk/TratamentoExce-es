@@ -1,17 +1,20 @@
 package application;
 
+import java.util.InputMismatchException;
 import java.util.Locale;
 import java.util.Scanner;
 
 import entities.Account;
+import entities.DomainException;
 
 public class Program {
 
 	public static void main(String[] args) {
 		Locale.setDefault(Locale.US);
 		Scanner sc = new Scanner(System.in);
+		Account account = new Account();
 		
-		
+		try {
 		System.out.println("Enter account data: ");
 		System.out.print("Number: ");
 		int number = sc.nextInt();
@@ -23,18 +26,29 @@ public class Program {
 		System.out.print("Withdraw limit: ");
 		double withdraw = sc.nextDouble();
 		
-		Account account = new Account(number, holder, balance, withdraw);
+		account = new Account(number, holder, balance, withdraw);
 		System.out.println();
 		
 		System.out.println("Enter amount for withdraw: ");
 		double amount = sc.nextDouble();
+		
+		
 		account.withdraw(amount);
+		
+	
+		
 		System.out.printf("New Balance: %.2f%n", account.getBalance());
-		
-		
-		
-		
+		}
+		catch (DomainException e) {
+			System.out.println( e.getMessage());
 		
 	}
+		catch (RuntimeException e) {
+			System.out.println("Unexpected error");
+		}
+
+	
+	}
+	
 
 }
